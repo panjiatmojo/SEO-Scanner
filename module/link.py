@@ -1,19 +1,18 @@
 #!/usr/bin/python
 
 
-class MetaData:
+class Link:
 	
 	def __init__(self, args = {}):
 		return
 	
 	def extract(self, data):
 		import re
-		import json
-		matches = re.findall('(<meta[^\/]+?\/>)', data)
+		matches = re.findall(r"<link[^<].+?>", data)
 		return matches
 
 	def get_title(self):
-		return "Meta Data"
+		return "Links"
 
 	def get_format(self):
 		return ""

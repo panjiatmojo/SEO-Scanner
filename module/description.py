@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-class MetaData:
+class Description:
 	
 	def __init__(self, args = {}):
 		return
@@ -9,11 +9,13 @@ class MetaData:
 	def extract(self, data):
 		import re
 		import json
-		matches = re.findall('(<meta[^\/]+?\/>)', data)
-		return matches
+		matches = re.findall('(<meta[^<]*?name=(\"|\')description(\"|\')[^<]*?>)', data)
+		matches = re.findall('content=("|\')(.+?)("|\')', matches[0][0])
+
+		return matches[0][1]
 
 	def get_title(self):
-		return "Meta Data"
+		return "Description"
 
 	def get_format(self):
 		return ""
@@ -21,10 +23,8 @@ class MetaData:
 	def format(self, data):
 		import html
 		format = ""
-		for datum in data:
-			format += "<li>" + html.escape(datum) + "</li>"
+		format += html.escape(data) 
 
-		format = "<ul>" + format + "</ul>"
 		format = "<h2>" + self.get_title() + "</h2>" + format
 
 		return format
